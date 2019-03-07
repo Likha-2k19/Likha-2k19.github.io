@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D Likha</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64">
+</head>
+
+<body>
+    <div class="navigation">
+        <img src="img/logo.png" alt="LOGO" style="width: 400px;height:400px;padding-top:10px;padding-left:10px;">
+        <!-- <a href="#" style="margin-left:60%;">Home</a>
+        <a href="test.html">Contact Us</a> -->
+    </div>
+    <h1 class="mainHeading"> LIKHA '19</h1>
+    <div class="text"></div>
+    <h1 class="comingsoon">COMING SOON</h1>
+    <script src="js/textscramble.js"></script>
+    <script src="js/three.js"></script>
+    <script src=".\js\controls\OrbitControls.js"></script>
+    <script>
+        var scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x000000);
+        var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 10000);
+        var controls = new THREE.OrbitControls(camera);
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);
+        document.body.appendChild(renderer.domElement);
+
+        camera.position.z = 30;
+        camera.position.x = 0;
+        camera.position.y = 0;
+        controls.update();
+
+        var geometry = new THREE.SphereGeometry(11, 32, 32);
+        var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("./textures/3.jpg") });
+        var sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        var light = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(light);
+
+        // var light = new THREE.HemisphereLight(0xffdf00, 0x080820, 0.5);
+        // scene.add(light);
+        // 0xffddddd
+        var sunlight = new THREE.DirectionalLight(0xff0000, 1.5);
+        sunlight.position.set(-4, 0, -1);
+        scene.add(sunlight);
+
+
+
+        var animate = function () {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // sphere.rotation.x += 0.010;
+            sphere.rotation.y += 0.010;
+
+            renderer.render(scene, camera);
+        };
+
+        animate();
+
+    </script>
+</body>
+
+</html>
